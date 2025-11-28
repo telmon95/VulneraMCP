@@ -31,7 +31,7 @@ VulneraMCP integrates with industry-standard security tools (ZAP, Caido, Burp Su
 - **Secret Detection**: Heuristic API key and token extraction
 - **Full Analysis**: Combined download, beautify, and analyze workflow
 
-### 🕷️ OWASP ZAP Integration
+### 🕷️ Integration
 - **Spider Scans**: Automated web crawling
 - **Active Scanning**: Vulnerability scanning
 - **Proxy Integration**: Process requests through ZAP proxy
