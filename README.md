@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org/)
 
-VulneraMCP integrates with industry-standard security tools (OWASP ZAP, Caido, Burp Suite) and provides AI-powered automation for reconnaissance, JavaScript analysis, security testing, and vulnerability detection. All findings are automatically stored in PostgreSQL for analysis and reporting.
+VulneraMCP integrates with industry-standard security tools (ZAP, Caido, Burp Suite) and provides AI-powered automation for reconnaissance, JavaScript analysis, security testing, and vulnerability detection. All findings are automatically stored in PostgreSQL for analysis and reporting.
 
 ## 🌟 Features
 
@@ -31,7 +31,7 @@ VulneraMCP integrates with industry-standard security tools (OWASP ZAP, Caido, B
 - **Secret Detection**: Heuristic API key and token extraction
 - **Full Analysis**: Combined download, beautify, and analyze workflow
 
-### 🕷️ OWASP ZAP Integration
+### 🕷️ ZAP Integration
 - **Spider Scans**: Automated web crawling
 - **Active Scanning**: Vulnerability scanning
 - **Proxy Integration**: Process requests through ZAP proxy
@@ -68,7 +68,7 @@ VulneraMCP integrates with industry-standard security tools (OWASP ZAP, Caido, B
 - **Node.js** 20+ and npm
 - **PostgreSQL** 18+ (or Docker)
 - **Redis** (optional, for caching)
-- **OWASP ZAP** (optional, for active scanning)
+- **ZAP** (optional, for active scanning)
 - **Caido** (optional, for traffic analysis)
 
 ### Installation
@@ -182,7 +182,7 @@ await limiter();
 VulneraMCP/
 ├── src/
 │   ├── integrations/    # External service integrations
-│   │   ├── zap.ts       # OWASP ZAP integration
+│   │   ├── zap.ts       # ZAP integration
 │   │   ├── caido.ts     # Caido integration
 │   │   ├── postgres.ts  # PostgreSQL database
 │   │   └── redis.ts     # Redis caching
@@ -267,7 +267,7 @@ This tool is for authorized security testing only. Always:
 
 ## 🙏 Acknowledgments
 
-- OWASP ZAP for vulnerability scanning
+- ZAP for vulnerability scanning
 - Caido for traffic analysis
 - PortSwigger for Burp Suite integration
 - The bug bounty community for inspiration and feedback
