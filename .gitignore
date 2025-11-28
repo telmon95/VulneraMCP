@@ -81,10 +81,10 @@ hunting/data/
 !hunting/README.md
 !hunting/start-hunt.sh
 
-# Archive and test files (optional - uncomment if you don't want these)
-# archive/
-# test-*.js
-# test-*.sh
+# Archive and test files
+archive/
+test-*.js
+test-*.sh
 
 # OS files
 Thumbs.db
