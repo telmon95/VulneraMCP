@@ -29,6 +29,22 @@ dashboard-server.js
 start-services.sh
 run-dashboard.sh
 
+# Burp Suite integration (proprietary tool)
+src/tools/burp.ts
+burp-extension/
+**/burp*.ts
+**/burp*.js
+**/burp*.java
+
+# Caido integration (proprietary tool)
+src/integrations/caido.ts
+src/tools/caido.ts
+src/helpers/caido-helpers.ts
+CAIDO_*.md
+**/caido*.ts
+**/caido*.js
+scripts/introspect-caido-schema.js
+
 # IDE and editor files
 .vscode/
 .idea/
