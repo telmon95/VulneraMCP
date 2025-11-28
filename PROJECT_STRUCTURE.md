@@ -44,11 +44,6 @@ This document outlines the organization of the AI Bug Bounty Hunter MCP Server p
 - `TRAINING_QUICKSTART.md` - Training quick start
 - `TRAINING_DATA_SOURCES.md` - Training data sources
 - `TRAINING_EXAMPLES.md` - Training examples
-- `CAIDO_SETUP.md` - Caido setup guide
-- `CAIDO_QUICKSTART.md` - Caido quick start
-- `CAIDO_PAT_GUIDE.md` - Caido PAT guide
-- `CAIDO_TROUBLESHOOTING.md` - Caido troubleshooting
-
 ### Extensions
 - `burp-extension/` - Burp Suite extension code
 

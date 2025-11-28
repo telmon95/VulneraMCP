@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20+-green.svg)](https://nodejs.org/)
 
-VulneraMCP integrates with industry-standard security tools (OWASP ZAP, Caido, Burp Suite) and provides AI-powered automation for reconnaissance, JavaScript analysis, security testing, and vulnerability detection. All findings are automatically stored in PostgreSQL for analysis and reporting.
+VulneraMCP integrates with industry-standard security tools (ZAP, Caido, Burp Suite) and provides AI-powered automation for reconnaissance, JavaScript analysis, security testing, and vulnerability detection. All findings are automatically stored in PostgreSQL for analysis and reporting.
 
 ## 🌟 Features
 
@@ -68,7 +68,7 @@ VulneraMCP integrates with industry-standard security tools (OWASP ZAP, Caido, B
 - **Node.js** 20+ and npm
 - **PostgreSQL** 18+ (or Docker)
 - **Redis** (optional, for caching)
-- **OWASP ZAP** (optional, for active scanning)
+- **ZAP** (optional, for active scanning)
 - **Caido** (optional, for traffic analysis)
 
 ### Installation
@@ -267,16 +267,13 @@ This tool is for authorized security testing only. Always:
 
 ## 🙏 Acknowledgments
 
-- OWASP ZAP for vulnerability scanning
-- Caido for traffic analysis
-- PortSwigger for Burp Suite integration
+- ZAP for vulnerability scanning
 - The bug bounty community for inspiration and feedback
 
 ## 📚 Documentation
 
 - [Quick Start Guide](QUICK_START.md)
 - [ZAP Integration](ZAP_INTEGRATION.md)
-- [Caido Setup](CAIDO_SETUP.md)
 - [Dashboard Guide](DASHBOARD_README.md)
 - [Training Data](TRAINING.md)
 
@@ -289,6 +286,3 @@ Found a bug? Have a feature request? Please open an issue on [GitHub](https://gi
 - GitHub: [@telmonmaluleka](https://github.com/telmonmaluleka)
 - Issues: [GitHub Issues](https://github.com/telmonmaluleka/VulneraMCP/issues)
 
----
-
-**Made with ❤️ for the bug bounty community**
