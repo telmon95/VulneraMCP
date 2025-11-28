@@ -20,6 +20,15 @@ logs/
 *.crt
 secrets/
 
+# MCP configuration with sensitive data
+mcp.json
+.cursor/mcp.json
+
+# Scripts with hardcoded passwords (keep example versions)
+dashboard-server.js
+start-services.sh
+run-dashboard.sh
+
 # IDE and editor files
 .vscode/
 .idea/

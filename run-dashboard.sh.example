@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Simple wrapper to run dashboard with correct environment variables
+#
+# IMPORTANT: Set your PostgreSQL password before running:
+#   export POSTGRES_PASSWORD='your_password_here'
+
+if [ -z "$POSTGRES_PASSWORD" ]; then
+    echo "⚠️  POSTGRES_PASSWORD not set. Please set it:"
+    echo "   export POSTGRES_PASSWORD='your_password_here'"
+    exit 1
+fi
+
+export POSTGRES_HOST=${POSTGRES_HOST:-localhost}
+export POSTGRES_PORT=${POSTGRES_PORT:-5433}  # PostgreSQL 18 uses port 5433
+export POSTGRES_USER=${POSTGRES_USER:-postgres}
+export POSTGRES_DB=${POSTGRES_DB:-bugbounty}
+
+cd "$(dirname "$0")"
+node dashboard-server.js
+

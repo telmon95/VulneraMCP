@@ -2,6 +2,9 @@
 
 # Bug Bounty MCP Server - Service Startup Script
 # This script starts PostgreSQL, initializes the database, and starts the dashboard
+#
+# IMPORTANT: Set your PostgreSQL password before running:
+#   export POSTGRES_PASSWORD='your_password_here'
 
 set -e
 
@@ -15,12 +18,17 @@ NC='\033[0m' # No Color
 echo -e "${BLUE}🚀 Starting Bug Bounty MCP Services...${NC}"
 echo ""
 
-# Set PostgreSQL password (set during installation)
-export POSTGRES_PASSWORD='12345'  # PostgreSQL password
-export POSTGRES_HOST=localhost
-export POSTGRES_PORT=5433  # PostgreSQL 18 uses port 5433
-export POSTGRES_USER=postgres  # PostgreSQL installer creates 'postgres' superuser
-export POSTGRES_DB=bugbounty
+# Set PostgreSQL password from environment or prompt
+if [ -z "$POSTGRES_PASSWORD" ]; then
+    echo -e "${YELLOW}⚠️  POSTGRES_PASSWORD not set. Please set it:${NC}"
+    echo -e "${BLUE}   export POSTGRES_PASSWORD='your_password_here'${NC}"
+    exit 1
+fi
+
+export POSTGRES_HOST=${POSTGRES_HOST:-localhost}
+export POSTGRES_PORT=${POSTGRES_PORT:-5433}  # PostgreSQL 18 uses port 5433
+export POSTGRES_USER=${POSTGRES_USER:-postgres}
+export POSTGRES_DB=${POSTGRES_DB:-bugbounty}
 
 # Get script directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -30,11 +38,11 @@ cd "$SCRIPT_DIR"
 echo -e "${BLUE}🐘 Step 1: Checking PostgreSQL 18 installation...${NC}"
 if [ -d "/Library/PostgreSQL/18" ]; then
     echo -e "${GREEN}   ✅ PostgreSQL 18 found at /Library/PostgreSQL/18${NC}"
-    echo -e "${BLUE}   Port: 5433 | User: postgres${NC}"
+    echo -e "${BLUE}   Port: ${POSTGRES_PORT} | User: ${POSTGRES_USER}${NC}"
     
     # Check if service is running
     if [ -f "/Library/PostgreSQL/18/bin/pg_isready" ]; then
-        if /Library/PostgreSQL/18/bin/pg_isready -h localhost -p 5433 > /dev/null 2>&1; then
+        if /Library/PostgreSQL/18/bin/pg_isready -h localhost -p ${POSTGRES_PORT} > /dev/null 2>&1; then
             echo -e "${GREEN}   ✅ PostgreSQL service is running${NC}"
         else
             echo -e "${YELLOW}   ⚠️  PostgreSQL service may not be running${NC}"
@@ -51,7 +59,7 @@ fi
 echo -e "${BLUE}⏳ Waiting for PostgreSQL to be ready...${NC}"
 MAX_WAIT=30
 WAIT_COUNT=0
-until PGPASSWORD='12345' /Library/PostgreSQL/18/bin/pg_isready -h localhost -p 5433 -U postgres > /dev/null 2>&1; do
+until PGPASSWORD="${POSTGRES_PASSWORD}" /Library/PostgreSQL/18/bin/pg_isready -h localhost -p ${POSTGRES_PORT} -U ${POSTGRES_USER} > /dev/null 2>&1; do
     WAIT_COUNT=$((WAIT_COUNT + 1))
     if [ $WAIT_COUNT -ge $MAX_WAIT ]; then
         echo -e "${RED}   ❌ PostgreSQL failed to start within $MAX_WAIT seconds${NC}"
@@ -65,7 +73,7 @@ echo ""
 
 # Step 2: Initialize database
 echo -e "${BLUE}📦 Step 2: Initializing database...${NC}"
-if POSTGRES_PASSWORD='12345' POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres node init-db.js 2>&1 | grep -q "already exists"; then
+if POSTGRES_PASSWORD="${POSTGRES_PASSWORD}" POSTGRES_HOST=${POSTGRES_HOST} POSTGRES_PORT=${POSTGRES_PORT} POSTGRES_USER=${POSTGRES_USER} node init-db.js 2>&1 | grep -q "already exists"; then
     echo -e "${YELLOW}   Database already initialized${NC}"
 else
     echo -e "${GREEN}   ✅ Database initialized successfully${NC}"
@@ -81,7 +89,7 @@ if pgrep -f "dashboard-server.js" > /dev/null; then
 fi
 
 echo -e "${BLUE}   Starting dashboard with correct configuration...${NC}"
-POSTGRES_PASSWORD='12345' POSTGRES_HOST=localhost POSTGRES_PORT=5433 POSTGRES_USER=postgres POSTGRES_DB=bugbounty \
+POSTGRES_PASSWORD="${POSTGRES_PASSWORD}" POSTGRES_HOST=${POSTGRES_HOST} POSTGRES_PORT=${POSTGRES_PORT} POSTGRES_USER=${POSTGRES_USER} POSTGRES_DB=${POSTGRES_DB} \
     nohup node dashboard-server.js > dashboard-server.log 2>&1 &
 
 DASHBOARD_PID=$!
@@ -102,8 +110,8 @@ sleep 2
 
 # Check PostgreSQL
 if [ -f "/Library/PostgreSQL/18/bin/pg_isready" ]; then
-    if /Library/PostgreSQL/18/bin/pg_isready -h localhost -p 5433 > /dev/null 2>&1; then
-        echo -e "${GREEN}   ✅ PostgreSQL 18: Running on port 5433${NC}"
+    if /Library/PostgreSQL/18/bin/pg_isready -h localhost -p ${POSTGRES_PORT} > /dev/null 2>&1; then
+        echo -e "${GREEN}   ✅ PostgreSQL 18: Running on port ${POSTGRES_PORT}${NC}"
     else
         echo -e "${YELLOW}   ⚠️  PostgreSQL 18: Not running (may still be starting)${NC}"
     fi
@@ -124,7 +132,7 @@ echo -e "${GREEN}✅ All services started successfully!${NC}"
 echo -e "${GREEN}════════════════════════════════════════${NC}"
 echo ""
 echo -e "${BLUE}📊 Dashboard:${NC} http://localhost:3000"
-echo -e "${BLUE}🐘 PostgreSQL:${NC} localhost:5432"
+echo -e "${BLUE}🐘 PostgreSQL:${NC} localhost:${POSTGRES_PORT}"
 echo -e "${BLUE}📝 Logs:${NC} tail -f dashboard-server.log"
 echo ""
 

@@ -24,7 +24,7 @@ let pool;
 try {
   // Ensure password is always a string (not undefined)
   if (!process.env.POSTGRES_PASSWORD) {
-    process.env.POSTGRES_PASSWORD = '12345'; // Default password
+    process.env.POSTGRES_PASSWORD = ''; // Set your password here or via environment variable
   }
   
   // Ensure it's a string
